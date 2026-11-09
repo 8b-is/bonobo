@@ -35,9 +35,45 @@ func NewRationalPQ(p, q int64) RationalPQ {
 	return RationalPQ{P: bp, Q: bq}
 }
 
-// BonoboRatio returns the canonical Bonobo solar phylogenetic resonance ratio: 3/2
+// BonoboRatio returns the canonical Bonobo solar phylogenetic resonance ratio: 3/2 (+1 trit).
 func BonoboRatio() RationalPQ {
 	return NewRationalPQ(3, 2)
+}
+
+// LovaszDualRatio returns the LLL lattice basis reduction Lovasz condition parameter: 3/4.
+func LovaszDualRatio() RationalPQ {
+	return NewRationalPQ(3, 4)
+}
+
+// TechnoZenHarmonicRatio returns the Techno-Zen-Bonobo era Pythagorean whole-tone harmonic: (3/2) * (3/4) = 9/8.
+func TechnoZenHarmonicRatio() RationalPQ {
+	return BonoboRatio().Mul(LovaszDualRatio())
+}
+
+// TechnoZenSquaredRatio returns the Techno-Zen-Bonobo additive-multiplicative identity: (3/2) + (3/4) = 9/4 = (3/2)^2.
+func TechnoZenSquaredRatio() RationalPQ {
+	return BonoboRatio().Add(LovaszDualRatio())
+}
+
+// Div returns r / other in exact rational representation. If other == 0, returns 0/1.
+func (r RationalPQ) Div(other RationalPQ) RationalPQ {
+	if other.P == nil || other.P.Sign() == 0 {
+		return NewRationalPQ(0, 1)
+	}
+	recip := RationalPQ{P: new(big.Int).Set(other.Q), Q: new(big.Int).Set(other.P)}
+	if recip.Q.Sign() < 0 {
+		recip.P.Neg(recip.P)
+		recip.Q.Neg(recip.Q)
+	}
+	return r.Mul(recip)
+}
+
+// CompressionSavingsPQ returns (tokensBefore - tokensAfter) / tokensBefore in canonical reduced p/q form.
+func CompressionSavingsPQ(tokensBefore, tokensAfter int64) RationalPQ {
+	if tokensBefore <= 0 || tokensAfter >= tokensBefore {
+		return NewRationalPQ(0, 1)
+	}
+	return NewRationalPQ(tokensBefore-tokensAfter, tokensBefore)
 }
 
 // Add returns r + other in exact rational representation

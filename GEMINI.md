@@ -1,3 +1,4 @@
+@./skills/techno-zen-bonobo/SKILL.md
 @./skills/caveman/SKILL.md
 @./skills/ultracave/SKILL.md
 @./skills/megacave/SKILL.md

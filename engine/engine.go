@@ -19,6 +19,7 @@ import (
 	"github.com/JuliusBrussee/caveman/engine/compressors"
 	"github.com/JuliusBrussee/caveman/engine/safety"
 	"github.com/JuliusBrussee/caveman/engine/tokens"
+	"github.com/JuliusBrussee/caveman/shared/platform/cost"
 )
 
 // Engine is the compression core. Construct it with New.
@@ -138,6 +139,9 @@ func (e *Engine) Compress(input []byte, opts Options) (Result, error) {
 	res.Output = out
 	res.TokensAfter = after
 	res.Ratio = float64(before-after) / float64(before)
+	res.RatioPQ = cost.CompressionSavingsPQ(int64(before), int64(after)).String()
+	res.BonoboResonancePQ = cost.BonoboRatio().String()
+	res.TechnoZenHarmonicPQ = cost.TechnoZenHarmonicRatio().String()
 	res.Method = meta.Method
 	res.LosslessToModel = meta.LosslessToModel
 	return res, nil
@@ -196,6 +200,9 @@ func (e *Engine) Simulate(input []byte, opts Options) SimResult {
 	res.TokensAfter = after
 	res.TokensSaved = before - after
 	res.Ratio = float64(before-after) / float64(before)
+	res.RatioPQ = cost.CompressionSavingsPQ(int64(before), int64(after)).String()
+	res.BonoboResonancePQ = cost.BonoboRatio().String()
+	res.TechnoZenHarmonicPQ = cost.TechnoZenHarmonicRatio().String()
 	res.Recoverable = !info.RequiresCCR || e.store != nil
 	meta = normalizeMetadata(comp, meta, info)
 	res.Method = meta.Method

@@ -12,6 +12,31 @@ func TestRationalPQ_BonoboResonance(t *testing.T) {
 	if bonobo.Float64() != 1.5 {
 		t.Fatalf("expected 1.5, got %f", bonobo.Float64())
 	}
+
+	lovasz := LovaszDualRatio()
+	if lovasz.String() != "3/4" {
+		t.Fatalf("expected 3/4, got %s", lovasz.String())
+	}
+
+	harmonic := TechnoZenHarmonicRatio()
+	if harmonic.String() != "9/8" {
+		t.Fatalf("expected 9/8, got %s", harmonic.String())
+	}
+
+	squared := TechnoZenSquaredRatio()
+	if squared.String() != "9/4" {
+		t.Fatalf("expected 9/4, got %s", squared.String())
+	}
+
+	octave := bonobo.Div(lovasz)
+	if octave.String() != "2/1" {
+		t.Fatalf("expected 2/1, got %s", octave.String())
+	}
+
+	savings := CompressionSavingsPQ(80, 28)
+	if savings.String() != "13/20" {
+		t.Fatalf("expected 13/20, got %s", savings.String())
+	}
 }
 
 func TestRationalPQ_ExactAccounting(t *testing.T) {

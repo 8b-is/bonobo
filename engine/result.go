@@ -57,6 +57,12 @@ type Result struct {
 	TokenCountBasis string `json:"token_count_basis"`
 	// Ratio is the fraction of tokens removed (0..1); 0 on pass-through.
 	Ratio float64 `json:"ratio"`
+	// RatioPQ is the canonical reduced rational p/q of tokens removed ((before-after)/before).
+	RatioPQ string `json:"ratio_pq,omitempty"`
+	// BonoboResonancePQ is the Rung 0 Bonobo solar phylogenetic resonance ratio ("3/2").
+	BonoboResonancePQ string `json:"bonobo_resonance_pq,omitempty"`
+	// TechnoZenHarmonicPQ is the Techno-Zen-Bonobo Pythagorean whole-tone harmonic ("9/8" = 3/2 * 3/4).
+	TechnoZenHarmonicPQ string `json:"techno_zen_harmonic_pq,omitempty"`
 	// Basis identifies the token-count basis.
 	Basis string `json:"basis"`
 	// RecoveryHandle is the CCR handle for the original; empty on pass-through.
@@ -89,6 +95,12 @@ type SimResult struct {
 	TokenCountBasis string `json:"token_count_basis"`
 	// Ratio is the fraction of tokens removed (0..1); 0 on pass-through.
 	Ratio float64 `json:"ratio"`
+	// RatioPQ is the canonical reduced rational p/q of tokens removed ((before-after)/before).
+	RatioPQ string `json:"ratio_pq,omitempty"`
+	// BonoboResonancePQ is the Rung 0 Bonobo solar phylogenetic resonance ratio ("3/2").
+	BonoboResonancePQ string `json:"bonobo_resonance_pq,omitempty"`
+	// TechnoZenHarmonicPQ is the Techno-Zen-Bonobo Pythagorean whole-tone harmonic ("9/8" = 3/2 * 3/4).
+	TechnoZenHarmonicPQ string `json:"techno_zen_harmonic_pq,omitempty"`
 	// Lossy is true when the model-visible output dropped data.
 	Lossy bool `json:"lossy"`
 	// RequiresCCR is true when byte-exact recovery requires a stored original.
